@@ -44,18 +44,18 @@ class Personnel {
       image: json['image'] ?? '',
       email: json['email'] ?? '',
       phone: json['phone'] ?? '',
-      education: json['education'],
-      experience: json['experience'],
-      expertise: json['expertise'],
-      interest: json['interest'],
-      certificate: json['certificate'],
-      research: json['research'],
-      books: json['books'],
-      awards: json['awards'],
-      contact: json['contact'],
-      website: json['website'],
-      lineId: json['line_id'],
-      status: json['status'],
+      education: json['education'] ?? '',
+      experience: json['experience'] ?? '',
+      expertise: json['expertise'] ?? '',
+      interest: json['interest'] ?? '',
+      certificate: json['certificate'] ?? '',
+      research: json['research'] ?? '',
+      books: json['books'] ?? '',
+      awards: json['awards'] ?? '',
+      contact: json['contact'] ?? '',
+      website: json['website'] ?? '',
+      lineId: json['line_id'] ?? '',
+      status: json['status'] ?? '',
     );
   }
 
@@ -95,14 +95,14 @@ class PersonnelData {
 
   factory PersonnelData.fromJson(Map<String, dynamic> json) {
     return PersonnelData(
-      lecturers: (json['อาจารย์'] as List<dynamic>)
-          .map((item) => Personnel.fromJson(item))
+      lecturers: (json['อาจารย์'] as List<dynamic>? ?? [])
+          .map((item) => Personnel.fromJson(item as Map<String, dynamic>))
           .toList(),
-      executives: (json['ผู้บริหารภาค'] as List<dynamic>)
-          .map((item) => Personnel.fromJson(item))
+      executives: (json['ผู้บริหารภาค'] as List<dynamic>? ?? [])
+          .map((item) => Personnel.fromJson(item as Map<String, dynamic>))
           .toList(),
-      staff: (json['บุคลากรสนับสนุน'] as List<dynamic>)
-          .map((item) => Personnel.fromJson(item))
+      staff: (json['บุคลากรสนับสนุน'] as List<dynamic>? ?? [])
+          .map((item) => Personnel.fromJson(item as Map<String, dynamic>))
           .toList(),
     );
   }

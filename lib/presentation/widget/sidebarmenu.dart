@@ -19,6 +19,11 @@ class Sidebarmenus extends StatelessWidget implements PreferredSizeWidget {
           onTap: () => Navigator.pushNamed(context, '/history'),
         ),
         MenuItem(
+          icon: Icons.signpost_outlined,
+          text: 'Signup',
+          onTap: () => Navigator.pushNamed(context, '/register'),
+        ),
+        MenuItem(
           icon: Icons.login_rounded,
           text: 'Login',
           onTap: () => Navigator.pushNamed(context, '/logins'),

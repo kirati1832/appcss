@@ -17,9 +17,10 @@ import 'package:appcsall/presentation/page/url.dart';
 import 'presentation/q/CSGreen.dart';
 import 'presentation/q/Organization.dart';
 import 'presentation/q/course.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
