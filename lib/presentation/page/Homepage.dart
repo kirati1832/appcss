@@ -63,6 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Appbars(),
+      drawer: Sidebarmenus(),
+    
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
