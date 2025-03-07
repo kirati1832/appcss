@@ -15,6 +15,12 @@ class Appbars extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 3,
       shadowColor: Colors.black26,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.info_outline,size: 30,), // ไอคอน ℹ (Information)
+          onPressed: () {},
+        ),
+      ],
     );
   }
 
@@ -35,12 +41,17 @@ class Appbarback extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.blueAccent, // ✅ เปลี่ยนสีเป็น BlueAccent
       elevation: 3,
       shadowColor: Colors.black26,
-      leading: Navigator.canPop(context) // ✅ ถ้ากลับได้ ให้แสดงปุ่ม Back
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white, size: 30),
-              onPressed: () => Navigator.pop(context),
-            )
-          : null,
+      leading:
+          Navigator.canPop(context) // ✅ ถ้ากลับได้ ให้แสดงปุ่ม Back
+              ? IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                onPressed: () => Navigator.pop(context),
+              )
+              : null,
       title: Text(
         titleText, // ✅ ใช้พารามิเตอร์ที่รับมา
         style: const TextStyle(

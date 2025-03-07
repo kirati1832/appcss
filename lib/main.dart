@@ -1,3 +1,4 @@
+import 'package:appcsall/presentation/reg/finance.dart';
 import 'package:appcsall/presentation/webview/viewweb_csb_download.dart';
 import 'package:appcsall/presentation/widget/horizontalMenu.dart';
 import 'package:appcsall/presentation/page/Footer.dart';
@@ -17,6 +18,7 @@ import 'package:appcsall/presentation/page/url.dart';
 import 'presentation/q/CSGreen.dart';
 import 'presentation/q/Organization.dart';
 import 'presentation/q/course.dart';
+//import 'presentation/reg/finance.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
           '/csgreen':(context)=>CSGreen(),
           '/organization':(context)=>Organization(),
           '/course':(context)=>course(),
-        });
+        }
+        );
   }
 }

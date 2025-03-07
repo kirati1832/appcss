@@ -124,6 +124,19 @@ class Menusubmain extends StatelessWidget {
         label: "ติดต่อเรา",
         onTap: () => Navigator.pushNamed(context,'/contact'),
       ),
+      MenuItem(
+        icon: Icons.login,
+        label: "login",
+        onTap:
+            () => Navigator.pushNamed(context, '/logins'),
+      ),
+      MenuItem(
+        icon: Icons.app_registration_outlined,
+        label: "register",
+        onTap:
+            () => Navigator.pushNamed(context, '/register'),
+      ),
+      
     ];
 
     final List<MenuItem> menuData4 = [
@@ -137,6 +150,32 @@ class Menusubmain extends StatelessWidget {
                 builder:
                     (context) =>
                         Url(url: 'http://cs.kmutnb.ac.th/staff_download.jsp'),
+              ),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.book,
+        label: "งานการเงิน",
+        onTap:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        Url(url: 'http://cs.kmutnb.ac.th/reg-finance.jsp'),
+              ),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.book,
+        label: "งานการเงิน",
+        onTap:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        Url(url: 'http://cs.kmutnb.ac.th/course.jsp'),
               ),
             ),
       ),

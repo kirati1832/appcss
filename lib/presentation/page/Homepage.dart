@@ -1,7 +1,10 @@
+import 'package:appcsall/presentation/page/url.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:appcsall/presentation/widget/widget.dart';
 import 'Footer.dart';
+import '../widget/sidebarmenu.dart';
+import '../widget/detail_carousel_slide.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -59,10 +62,20 @@ class _MyHomePageState extends State<MyHomePage> {
     "มีนาคม 2564",
   ];
 
+  final List<String> links = [
+    "http://cs.kmutnb.ac.th/csb.jsp",
+    "http://cs.kmutnb.ac.th/csb.jsp",
+    "http://cs.kmutnb.ac.th/csb.jsp",
+    "http://cs.kmutnb.ac.th/csb.jsp",
+    "http://cs.kmutnb.ac.th/csb.jsp",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Appbars(),
+      drawer: Sidebarmenus(),
+    
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
@@ -92,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: titles,
               detail: details,
               date: dates,
+              link: links,
             ),
 
             /// **ข่าวสาร**

@@ -42,8 +42,7 @@ class Logins extends StatelessWidget {
                     Colors.black, // เลือกสีที่ต้องการลบ
                     BlendMode.dstOut, // ซ่อนสีที่กำหนด
                   ),
-                  child: Image.asset('assets/cislogo.png',
-                      width: 100, height: 100), // หรือ Image.network()
+                  
                 ),
                 SizedBox(height: 20),
                
@@ -55,11 +54,7 @@ class Logins extends StatelessWidget {
               // ✅ พื้นหลังเต็มจอ
               Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        'assets/background.jpg'), // เปลี่ยนเป็นรูปพื้นหลังของคุณ
-                    fit: BoxFit.cover,
-                  ),
+                  
                 ),
               ),
 
