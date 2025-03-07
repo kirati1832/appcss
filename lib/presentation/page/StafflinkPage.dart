@@ -27,7 +27,7 @@ class LinkPage extends StatelessWidget {
         child: GridView.builder(
           itemCount: menuItems.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, // แสดง 3 คอลัมน์ต่อแถว
+            crossAxisCount: 2, // แสดง 3 คอลัมน์ต่อแถว
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             childAspectRatio: 1.2, // ปรับสัดส่วน

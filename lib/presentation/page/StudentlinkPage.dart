@@ -30,7 +30,7 @@ class StudentLinkPage extends StatelessWidget {
         child: GridView.builder(
           itemCount: menuItems.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, // ปรับเป็น 4 คอลัมน์ตามภาพ
+            crossAxisCount: 2, // ปรับเป็น 4 คอลัมน์ตามภาพ
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             childAspectRatio: 1.2, // ปรับสัดส่วนให้ใกล้เคียง

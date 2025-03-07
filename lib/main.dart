@@ -1,4 +1,9 @@
+import 'package:appcsall/credit_page.dart';
+import 'package:appcsall/presentation/news/news_list_screen_riverpod.dart';
+import 'package:appcsall/presentation/page/stafflinkpage.dart';
 import 'package:appcsall/presentation/reg/finance.dart';
+import 'package:appcsall/presentation/student/student_advisors_screen.dart';
+import 'package:appcsall/presentation/student/student_screen.dart';
 import 'package:appcsall/presentation/webview/viewweb_csb_download.dart';
 import 'package:appcsall/presentation/widget/horizontalMenu.dart';
 import 'package:appcsall/presentation/page/Footer.dart';
@@ -18,10 +23,10 @@ import 'package:appcsall/presentation/page/url.dart';
 import 'presentation/q/CSGreen.dart';
 import 'presentation/q/Organization.dart';
 import 'presentation/q/course.dart';
-//import 'presentation/reg/finance.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +36,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -44,7 +48,6 @@ class MyApp extends StatelessWidget {
           '/': (cotext) => MyHomePage(title: "CS KMUTNB"),
           '/submenu': (context) => Menusubmain(),
           '/staff': (context) => PersonnelScreen(),
-          '/student':(context) => StudentLinkPage(),
           '/history':(context)=>Hitorymain(),
           '/login':(context)=>Logins(),
           '/logins':(context)=>LoginPage(),
@@ -53,6 +56,12 @@ class MyApp extends StatelessWidget {
           '/csgreen':(context)=>CSGreen(),
           '/organization':(context)=>Organization(),
           '/course':(context)=>course(),
+          '/stafflink':(context)=>LinkPage(),
+          '/studentlink':(context)=>StudentLinkPage(),
+          '/credit':(context)=>CreditsPage(),
+          '/news':(context)=>NewsListScreenRiverpod(),
+          '/student':(context)=>StudentScreen(),
+          '/advisors':(context)=>StudentAdvisorsScreen(),
         }
         );
   }

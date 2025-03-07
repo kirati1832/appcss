@@ -1,3 +1,4 @@
+import 'package:appcsall/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -90,6 +91,7 @@ class _HistoryState extends State<History> {
         MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: Appbarback(titleText: 'ประวัติภาควิชาฯ',),
       backgroundColor: Colors.black,
       body: GestureDetector(
         onVerticalDragUpdate: _onVerticalDragUpdate,

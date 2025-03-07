@@ -6,10 +6,10 @@ class Appbars extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 90, // ปรับความสูงของ AppBar ให้ใหญ่พอ
+      toolbarHeight: 70, // ปรับความสูงของ AppBar ให้ใหญ่พอ
       title: Image.network(
         'https://lh3.googleusercontent.com/d/1vOAxsOruch4kDHI_JiZQURCXsQlCx-s6=w1000',
-        height: 70, // คงขนาดของโลโก้
+        height: 60, // คงขนาดของโลโก้
       ),
       centerTitle: true,
       backgroundColor: Colors.white,
@@ -17,8 +17,8 @@ class Appbars extends StatelessWidget implements PreferredSizeWidget {
       shadowColor: Colors.black26,
       actions: [
         IconButton(
-          icon: const Icon(Icons.info_outline,size: 30,), // ไอคอน ℹ (Information)
-          onPressed: () {},
+          icon: const Icon(Icons.info_outline,size: 25,), // ไอคอน ℹ (Information)
+          onPressed: () {Navigator.pushNamed(context,'/credit');},
         ),
       ],
     );
@@ -26,7 +26,7 @@ class Appbars extends StatelessWidget implements PreferredSizeWidget {
 
   // ✅ ต้องเพิ่มส่วนนี้เพื่อให้รองรับ PreferredSizeWidget
   @override
-  Size get preferredSize => const Size.fromHeight(90); // กำหนดความสูงที่ต้องการ
+  Size get preferredSize => const Size.fromHeight(70); // กำหนดความสูงที่ต้องการ
 }
 
 class Appbarback extends StatelessWidget implements PreferredSizeWidget {
@@ -37,7 +37,7 @@ class Appbarback extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 90, // กำหนดความสูงของ AppBar
+      toolbarHeight: 70, // กำหนดความสูงของ AppBar
       backgroundColor: Colors.blueAccent, // ✅ เปลี่ยนสีเป็น BlueAccent
       elevation: 3,
       shadowColor: Colors.black26,
@@ -66,5 +66,5 @@ class Appbarback extends StatelessWidget implements PreferredSizeWidget {
 
   // ✅ รองรับ PreferredSizeWidget
   @override
-  Size get preferredSize => const Size.fromHeight(90);
+  Size get preferredSize => const Size.fromHeight(70);
 }

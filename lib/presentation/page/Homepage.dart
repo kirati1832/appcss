@@ -1,3 +1,4 @@
+import 'package:appcsall/bottom_navbar.dart';
 import 'package:appcsall/presentation/page/url.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import '../widget/detail_carousel_slide.dart';
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
+  
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -16,7 +18,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final ScrollController _scrollController = ScrollController();
-
+int _currentIndex = 2;
   void _scrollToTop() {
     _scrollController.animateTo(
       0,
@@ -42,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "วิทยาการคอมพิวเตอร์ (ภาคปกติ)",
     "วิทยาการคอมพิวเตอร์ (สองภาษา)",
     "วิศวกรรมซอฟต์แวร์ (ป.โท)",
-    "วิศวกรรมซอฟต์แวร์ (ป.โท)",
+    "วิทยาการคอมพิวเตอร์ (ป.โท)",
     "วิทยาการคอมพิวเตอร์ (ป.เอก)",
   ];
 
@@ -54,26 +56,45 @@ class _MyHomePageState extends State<MyHomePage> {
     "Doctor of Philosophy Program in Computer Science",
   ];
 
-  final List<String> dates = [
-    "มีนาคม 2564",
-    "มีนาคม 2564",
-    "มีนาคม 2564",
-    "มีนาคม 2564",
-    "มีนาคม 2564",
-  ];
 
   final List<String> links = [
-    "http://cs.kmutnb.ac.th/csb.jsp",
-    "http://cs.kmutnb.ac.th/csb.jsp",
-    "http://cs.kmutnb.ac.th/csb.jsp",
-    "http://cs.kmutnb.ac.th/csb.jsp",
-    "http://cs.kmutnb.ac.th/csb.jsp",
+    "http://cs.kmutnb.ac.th/course-list.jsp",
+    "http://cs.kmutnb.ac.th/course-list-inter.jsp",
+    "http://cs.kmutnb.ac.th/course-list_ms_cs.jsp",
+    "http://cs.kmutnb.ac.th/course-list_ms_se.jsp",
+    "http://cs.kmutnb.ac.th/course-list_phd.jsp",
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Appbars(),
+       bottomNavigationBar: BottomNavbar(
+        currentIndex: 2,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/news');
+              break;
+            case 1:
+            Navigator.pushNamed(context, '/student');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/staff');
+              break;
+            case 4:
+              Navigator.pushNamed(context, '/submenu');
+              break;
+          }
+        },
+      ),
       drawer: Sidebarmenus(),
     
       body: SingleChildScrollView(
@@ -104,7 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
               images: images,
               title: titles,
               detail: details,
-              date: dates,
               link: links,
             ),
 
@@ -113,35 +133,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
             //NewsScreen(),
             const SizedBox(height: 15),
-            Padding(
-                padding: EdgeInsets.all(15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('เมนูลัด',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent,
-                            fontSize: 22),),
-                            SizedBox(width: 8,),
-                    Row(
-                      children: [
-                        TextButton(
-                          onPressed: (){Navigator.pushNamed(context, '/submenu');},
-                          child: Text(
-                            'เมนูลัดทั้งหมด',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.blueAccent,
-                                fontSize: 17), // ✅ ทำให้เป็นตัวหนา
-                          ),
-                        ),
-                        IconButton(onPressed: (){Navigator.pushNamed(context, '/submenu');}, icon: Icon(Icons.arrow_circle_right_sharp),color: Colors.blueAccent,padding: EdgeInsets.all(0),)
-                      ],
-                    )
-                  ],
-                )),
-            HorizontalMenu(),
+            // Padding(
+            //     padding: EdgeInsets.all(15),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Text('เมนูลัด',
+            //             style: TextStyle(
+            //                 fontWeight: FontWeight.bold,
+            //                 color: Colors.blueAccent,
+            //                 fontSize: 22),),
+            //                 SizedBox(width: 8,),
+            //         // Row(
+            //         //   children: [
+            //         //     TextButton(
+            //         //       onPressed: (){Navigator.pushNamed(context, '/submenu');},
+            //         //       child: Text(
+            //         //         'เมนูลัดทั้งหมด',
+            //         //         style: TextStyle(
+            //         //             fontWeight: FontWeight.w400,
+            //         //             color: Colors.blueAccent,
+            //         //             fontSize: 17), // ✅ ทำให้เป็นตัวหนา
+            //         //       ),
+            //         //     ),
+            //         //     IconButton(onPressed: (){Navigator.pushNamed(context, '/submenu');}, icon: Icon(Icons.arrow_circle_right_sharp),color: Colors.blueAccent,padding: EdgeInsets.all(0),)
+            //         //   ],
+            //         // )
+            //       ],
+            //     )),
+            // HorizontalMenu(),
             const SizedBox(height: 25),
 
             /// **Footer**

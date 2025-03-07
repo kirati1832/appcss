@@ -33,6 +33,11 @@ class Sidebarmenus extends StatelessWidget implements PreferredSizeWidget {
           text: 'Signout',
           onTap: () => {},
         ),
+        MenuItem(
+          icon: Icons.person_search,
+          text: 'Contact',
+          onTap: () => Navigator.pushNamed(context, '/contact'),
+        ),
       ],
     );
   }

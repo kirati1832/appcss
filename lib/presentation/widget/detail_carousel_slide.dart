@@ -7,7 +7,6 @@ class DetailCarouselSlide extends StatelessWidget {
   final List<String> images;
   final List<String> title;
   final List<String> detail;
-  final List<String> date;
   final List<String> link;
   final double height;
   final double viewportFraction;
@@ -20,7 +19,6 @@ class DetailCarouselSlide extends StatelessWidget {
     required this.images,
     required this.title,
     required this.detail,
-    required this.date,
     required this.link,
     this.height = 420.0, // ลดความสูงเล็กน้อย
     this.viewportFraction = 0.8, // ให้เห็นการ์ดข้างๆ
@@ -48,7 +46,6 @@ class DetailCarouselSlide extends StatelessWidget {
             String imageUrl = entry.value;
             String currentTitle = title[index];
             String currentDetail = detail[index];
-            String currentDate = date[index];
             String currentLink = link[index];
 
             return Container(
@@ -92,24 +89,8 @@ class DetailCarouselSlide extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         /// **วันที่**
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.event,
-                              color: Colors.grey,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              currentDate,
-                              style: GoogleFonts.sarabun(
-                                fontSize: 14,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
+                     
+                        const SizedBox(height: 20),
 
                         /// **ชื่อหลักสูตร**
                         Text(
@@ -122,7 +103,7 @@ class DetailCarouselSlide extends StatelessWidget {
                             color: Colors.blueAccent.shade700,
                           ),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 10),
 
                         /// **รายละเอียดหลักสูตร**
                         Text(
@@ -135,7 +116,7 @@ class DetailCarouselSlide extends StatelessWidget {
                             color: Colors.black87,
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
 
                         /// **ปุ่มดูรายละเอียด**
                         SizedBox(

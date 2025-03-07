@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../widget/appbar.dart';
 class Organization extends StatefulWidget {
   const Organization({super.key});
 
@@ -11,6 +11,7 @@ class _OrganizationState extends State<Organization> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: Appbarback(titleText: 'โครงสร้างการบริหารภาควิชาฯ',),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.fromLTRB(40, 10, 40, 0),
