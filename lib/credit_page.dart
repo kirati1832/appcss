@@ -32,18 +32,18 @@ class CreditsPage extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor:  Colors.lightBlue,
         elevation: 0,
         title: Text(
           'ทีมงานพัฒนา',
           style: TextStyle(
-              color: Colors.lightBlue,
+              color: const Color.fromARGB(255, 255, 255, 255),
               fontWeight: FontWeight.bold,
               fontSize: 20),
         ),
       ),
       body: Container(
-        color: Colors.blue, // Background color for the body
+        color: const Color.fromARGB(255, 236, 233, 233), // Background color for the body
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ListView.builder(

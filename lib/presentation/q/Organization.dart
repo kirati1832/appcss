@@ -14,14 +14,10 @@ class _OrganizationState extends State<Organization> {
       appBar: Appbarback(titleText: 'โครงสร้างการบริหารภาควิชาฯ',),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.fromLTRB(40, 10, 40, 0),
+          padding: EdgeInsets.all(40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'โครงสร้างการบริหารภาควิชาวิทยาการคอมพิวเตอร์และสารสนเทศ',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
               SizedBox(height: 20),
 
               // เมื่อกดที่รูปภาพ จะไปยังหน้า FullScreenImage
@@ -34,11 +30,16 @@ class _OrganizationState extends State<Organization> {
                     ),
                   );
                 },
-                child: Image.network(
-                  "http://202.44.40.179/DATA_From_chiab/Image/img/organization.jpg",
-                  width: 300,
-                  height: 200,
-                  fit: BoxFit.cover,
+                child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //SizedBox(height: MediaQuery.of(context).size.width * 0.5,width: MediaQuery.of(context).size.width * 0.8,),
+                    Image.network(
+                      "http://202.44.40.179/DATA_From_chiab/Image/img/organization.jpg",
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.width * 0.6,
+                      fit: BoxFit.cover,
+                    ),
+                  ],
                 ),
               ),
             ],

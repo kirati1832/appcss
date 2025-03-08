@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class GridMenu extends StatelessWidget {
   final String title;
   final List<MenuItem> menuItems;
-
-  const GridMenu({Key? key, required this.title, required this.menuItems})
+  final Color titleColor;
+  const GridMenu({Key? key, required this.title, required this.menuItems,required this.titleColor})
       : super(key: key);
 
   @override
@@ -37,7 +37,7 @@ class GridMenu extends StatelessWidget {
 
         // ✅ GridView แสดงเมนู
         Container(
-          color: Colors.white, // ✅ พื้นหลังสีขาว
+          color: const Color.fromARGB(255, 236, 233, 233), // ✅ พื้นหลังสีขาว
           padding: const EdgeInsets.all(14),
           child: GridView.builder(
             shrinkWrap: true,
@@ -55,16 +55,16 @@ class GridMenu extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // ✅ ไอคอน (สี BlueAccent)
-                    Icon(item.icon, size: 45, color: Colors.blueAccent),
+                    Icon(item.icon, size: 45, color: item.colors),
 
                     // ✅ ชื่อเมนู (สี BlueAccent)
                     const SizedBox(height: 5),
                     Text(
                       item.label,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontSize: 12,
-                        color: Colors.blueAccent,
+                        color: item.colors,
                       ),
                     ),
                   ],
@@ -82,7 +82,6 @@ class MenuItem {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
-
-  MenuItem({required this.icon, required this.label, required this.onTap});
+  final Color colors;
+  MenuItem({required this.icon, required this.label, required this.onTap, required this.colors});
 }
-//  launchUrl(Uri.parse(link["url"]!)),

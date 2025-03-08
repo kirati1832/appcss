@@ -3,35 +3,37 @@ import 'package:appcsall/presentation/page/url.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:appcsall/presentation/widget/widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Footer.dart';
 import '../widget/sidebarmenu.dart';
 import '../widget/detail_carousel_slide.dart';
+import '../../provider/news_provider.dart';
+import '../widget/news_carousel_slider.dart';
+import '../news/news_list_screen_riverpod.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-  
+// สร้าง StateNotifier สำหรับการจัดการ _currentIndex
+class NavigationIndexNotifier extends StateNotifier<int> {
+  NavigationIndexNotifier() : super(2);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  void updateIndex(int newIndex) => state = newIndex;
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final ScrollController _scrollController = ScrollController();
-int _currentIndex = 2;
-  void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
+// สร้าง Provider สำหรับ _currentIndex
+final navigationIndexProvider =
+    StateNotifierProvider<NavigationIndexNotifier, int>(
+      (ref) => NavigationIndexNotifier(),
     );
-  }
+
+class MyHomePage extends ConsumerWidget {
+  MyHomePage({super.key, required this.title});
+  final String title;
 
   final List<String> gallery = [
     'https://lh3.googleusercontent.com/d/1Bgr-M0T23MfDuHNClEzw7w-BilSPFqIO=w1000',
     'https://lh3.googleusercontent.com/d/1wQmsiupsteMm1_n2bHbqXeAE6GNvYhDI=w1000',
     'https://lh3.googleusercontent.com/d/1a7NSEzHLlomJGezdoB_VgUZjLGDHsVzi=w1000',
   ];
+
   final List<String> images = [
     "https://lh3.googleusercontent.com/d/1nfA24-joCPQcm7a_4H49ptYMueGx8uvt=w1000",
     "https://lh3.googleusercontent.com/d/1bi4cKu06V6mqSLiJ7SQBgXNy56cDXpTk=w1000",
@@ -56,7 +58,6 @@ int _currentIndex = 2;
     "Doctor of Philosophy Program in Computer Science",
   ];
 
-
   final List<String> links = [
     "http://cs.kmutnb.ac.th/course-list.jsp",
     "http://cs.kmutnb.ac.th/course-list-inter.jsp",
@@ -66,22 +67,25 @@ int _currentIndex = 2;
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final newsAsync = ref.watch(newsProvider);
+    final currentIndex = ref.watch(navigationIndexProvider);
+    final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
+
     return Scaffold(
       appBar: Appbars(),
-       bottomNavigationBar: BottomNavbar(
-        currentIndex: 2,
+      backgroundColor: const Color.fromARGB(255, 236, 233, 233),
+      bottomNavigationBar: BottomNavbar(
+        currentIndex: currentIndex,
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+          navigationIndexNotifier.updateIndex(index);
 
           switch (index) {
             case 0:
               Navigator.pushNamed(context, '/news');
               break;
             case 1:
-            Navigator.pushNamed(context, '/student');
+              Navigator.pushNamed(context, '/student');
               break;
             case 2:
               Navigator.pushNamed(context, '/');
@@ -96,75 +100,45 @@ int _currentIndex = 2;
         },
       ),
       drawer: Sidebarmenus(),
-    
       body: SingleChildScrollView(
-        controller: _scrollController,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-
-            /// **แสดงภาพ Carousel**
             CustomCarouselSlider(images: gallery),
+            const SizedBox(height: 20),
+            Text(
+              '🗞 ข่าว',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Colors.blueAccent,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
 
-            const SizedBox(height: 25),
-
-            /// **หัวข้อหลักสูตร**
+            newsAsync.when(
+              data: (newsList) => NewsCarouselSlider(newsList: newsList),
+              loading: () => CircularProgressIndicator(),
+              error: (error, _) => Text("Error loading news"),
+            ),
+            const SizedBox(height: 20),
             Text(
               '🎓 หลักสูตรของเรา',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Colors.blueAccent,
-                    fontSize: 30,
-                  ),
+                color: Colors.blueAccent,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            const SizedBox(height: 20),
 
-            const SizedBox(height: 15),
-
-            /// **แสดงหลักสูตร**
             DetailCarouselSlide(
               images: images,
               title: titles,
               detail: details,
               link: links,
             ),
-
-            /// **ข่าวสาร**
             const SizedBox(height: 25),
-
-            //NewsScreen(),
-            const SizedBox(height: 15),
-            // Padding(
-            //     padding: EdgeInsets.all(15),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         Text('เมนูลัด',
-            //             style: TextStyle(
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.blueAccent,
-            //                 fontSize: 22),),
-            //                 SizedBox(width: 8,),
-            //         // Row(
-            //         //   children: [
-            //         //     TextButton(
-            //         //       onPressed: (){Navigator.pushNamed(context, '/submenu');},
-            //         //       child: Text(
-            //         //         'เมนูลัดทั้งหมด',
-            //         //         style: TextStyle(
-            //         //             fontWeight: FontWeight.w400,
-            //         //             color: Colors.blueAccent,
-            //         //             fontSize: 17), // ✅ ทำให้เป็นตัวหนา
-            //         //       ),
-            //         //     ),
-            //         //     IconButton(onPressed: (){Navigator.pushNamed(context, '/submenu');}, icon: Icon(Icons.arrow_circle_right_sharp),color: Colors.blueAccent,padding: EdgeInsets.all(0),)
-            //         //   ],
-            //         // )
-            //       ],
-            //     )),
-            // HorizontalMenu(),
-            const SizedBox(height: 25),
-
-            /// **Footer**
           ],
         ),
       ),

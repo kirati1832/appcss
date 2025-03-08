@@ -1,12 +1,14 @@
+import 'package:appcsall/presentation/page/Homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'news_detail_screen_riverpod.dart';
 import '../../provider/news_provider.dart';
 import '../../provider/news_firstimage_provider.dart';
+import '../../bottom_navbar.dart';
+
 
 // State Provider for category selection
 final selectedCategoryProvider = StateProvider<int>((ref) => 0);
-
 class NewsListScreenRiverpod extends ConsumerWidget {
   final List<String> categories = [
     "ทั้งหมด",
@@ -20,11 +22,36 @@ class NewsListScreenRiverpod extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final newsAsync = ref.watch(newsProvider);
     final selectedCategoryIndex = ref.watch(selectedCategoryProvider);
-
+    final currentIndex = ref.watch(navigationIndexProvider);
+    final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
     return Scaffold(
-      appBar: AppBar(title: Text("ข่าวสาร")),
+      appBar: AppBar(title: Text("ข่าวสาร",style:TextStyle(color: Colors.white,)),backgroundColor: Colors.blue.shade800,),
+       bottomNavigationBar: BottomNavbar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          navigationIndexNotifier.updateIndex(index);
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/news');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/student');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/staff');
+              break;
+            case 4:
+              Navigator.pushNamed(context, '/submenu');
+              break;
+          }
+        },
+      ),
       body: Column(
         children: [
+          
           // Category Selection
           Container(
             padding: EdgeInsets.all(8.0),

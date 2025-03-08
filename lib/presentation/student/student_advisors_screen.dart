@@ -34,7 +34,8 @@ class _StudentAdvisorsScreenState extends State<StudentAdvisorsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('อาจารย์ที่ปรึกษา')),
+      backgroundColor: const Color.fromARGB(255, 236, 233, 233),
+      appBar: AppBar(title: Text('อาจารย์ที่ปรึกษา'),backgroundColor: Colors.pink.shade700,foregroundColor: Colors.white,),
       body: advisorsByYear.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView(
@@ -54,6 +55,7 @@ class _StudentAdvisorsScreenState extends State<StudentAdvisorsScreen> {
                     Column(
                       children: (entry.value as List).map((advisor) {
                         return Card(
+                          color: Colors.pink.shade100,
                           margin: EdgeInsets.symmetric(vertical: 5),
                           child: ListTile(
                             title: Text(advisor['title'],

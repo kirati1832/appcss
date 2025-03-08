@@ -24,7 +24,7 @@ class StudentLinkPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: const Appbarback(titleText: 'Link สำหรับนักศึกษา'),
+      appBar: const Appbarback(titleText: 'Link สำหรับนักศึกษา',),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: GridView.builder(

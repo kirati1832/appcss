@@ -5,7 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../page/url.dart';
 import '../../../bottom_navbar.dart';
-
 import 'student_advisors_screen.dart';
 
 class StudentScreen extends ConsumerStatefulWidget {
@@ -44,7 +43,7 @@ class _StudentScreenState extends ConsumerState<StudentScreen> {
     },
     {'title': 'คู่มือนักศึกษา', 'route': '/student-guide', 'icon': Icons.book},
     {'title': 'อาจารย์ที่ปรึกษา', 'route': '/advisors', 'icon': Icons.people},
-    {'title': 'Link นักศึกษา', 'route': '/student-links', 'icon': Icons.link},
+    {'title': 'Link นักศึกษา', 'route': '/studentlink', 'icon': Icons.link},
   ];
 
   @override
@@ -199,14 +198,7 @@ class _StudentScreenState extends ConsumerState<StudentScreen> {
                           );
                           break;
                         case 'Link นักศึกษา':
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Url(
-                                  url:
-                                      'http://cs.kmutnb.ac.th/link-student.jsp'),
-                            ),
-                          );
+                          Navigator.pushNamed(context,'/studentlink');
                           break;
                       }
                     },
@@ -257,6 +249,7 @@ class _StudentScreenState extends ConsumerState<StudentScreen> {
               Navigator.pushNamed(context, '/news');
               break;
             case 1:
+              Navigator.pushNamed(context, '/student');
               break;
             case 2:
               Navigator.pushNamed(context, '/');
@@ -265,7 +258,7 @@ class _StudentScreenState extends ConsumerState<StudentScreen> {
               Navigator.pushNamed(context, '/staff');
               break;
             case 4:
-              Navigator.pushNamed(context, '/credit');
+              Navigator.pushNamed(context, '/submenu');
               break;
           }
         },
