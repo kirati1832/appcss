@@ -19,10 +19,10 @@ class SidebarMenu extends StatelessWidget {
             /// **Header ของ Sidebar (เฉพาะโลโก้มีพื้นหลังสีขาว)**
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
               color: Colors.white, // ทำให้เฉพาะแถบโลโก้เป็นสีขาว
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   /// **โลโก้**
                   Image.network(
