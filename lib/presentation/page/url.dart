@@ -52,7 +52,7 @@ class _UrlState extends State<Url> {
   Future<void> downloadFile(String url) async {
     try {
       // ขอ permission ก่อน
-      //PermissionStatus status = await Permission.storage.request();
+      PermissionStatus status = await Permission.storage.request();
 
       Dio dio = Dio();
       dio.options.headers = {'Accept': 'application/octet-stream'};
