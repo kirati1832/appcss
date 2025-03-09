@@ -24,25 +24,25 @@ class PersonnelScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text("เกิดข้อผิดพลาด: $err")),
       ),
-      bottomNavigationBar: BottomNavbar(
-        currentIndex: currentIndex,
+       bottomNavigationBar: BottomNavbar(
         onTap: (index) {
-          navigationIndexNotifier.updateIndex(index);
+          if (currentIndex == index) return;
+          ref.read(navigationIndexProvider.notifier).updateIndex(index);
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/news');
+              Navigator.pushReplacementNamed(context, '/news');
               break;
             case 1:
-              Navigator.pushNamed(context, '/student');
+              Navigator.pushReplacementNamed(context, '/student');
               break;
             case 2:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/');
               break;
             case 3:
-              Navigator.pushNamed(context, '/staff');
+              Navigator.pushReplacementNamed(context, '/staff');
               break;
             case 4:
-              Navigator.pushNamed(context, '/submenu');
+              Navigator.pushReplacementNamed(context, '/submenu');
               break;
           }
         },
@@ -243,7 +243,7 @@ class PersonnelDetailScreen extends StatelessWidget {
                     SizedBox(height: 15),
                     if (educationList.isNotEmpty)
                       _buildSection("📘 วุฒิการศึกษา", educationList),
-SizedBox(height: 15),
+
                     if (researchList.isNotEmpty)
                       _buildSection("📑 ผลงานทางวิชาการ", researchList),
                   ],

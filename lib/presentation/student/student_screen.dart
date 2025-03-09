@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../page/url.dart';
 import '../../../bottom_navbar.dart';
 import 'student_advisors_screen.dart';
-
+import 'package:appcsall/provider/bottomnavbarprovider.dart';
 class StudentScreen extends ConsumerStatefulWidget {
   @override
   _StudentScreenState createState() => _StudentScreenState();
@@ -48,6 +48,7 @@ class _StudentScreenState extends ConsumerState<StudentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = ref.watch(navigationIndexProvider);
     return Scaffold(
       backgroundColor: Colors.orange[300],
       appBar: AppBar(
@@ -237,28 +238,25 @@ class _StudentScreenState extends ConsumerState<StudentScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavbar(
-        currentIndex: _currentIndex,
+       bottomNavigationBar: BottomNavbar(
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-
+          if (currentIndex == index) return;
+          ref.read(navigationIndexProvider.notifier).updateIndex(index);
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/news');
+              Navigator.pushReplacementNamed(context, '/news');
               break;
             case 1:
-              Navigator.pushNamed(context, '/student');
+              Navigator.pushReplacementNamed(context, '/student');
               break;
             case 2:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/');
               break;
             case 3:
-              Navigator.pushNamed(context, '/staff');
+              Navigator.pushReplacementNamed(context, '/staff');
               break;
             case 4:
-              Navigator.pushNamed(context, '/submenu');
+              Navigator.pushReplacementNamed(context, '/submenu');
               break;
           }
         },

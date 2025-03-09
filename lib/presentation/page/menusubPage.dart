@@ -3,18 +3,16 @@ import 'package:appcsall/presentation/widget/widget.dart';
 import 'url.dart';
 import '../../bottom_navbar.dart';
 import '../widget/menusub.dart';
-
-class Menusubmain extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:appcsall/provider/bottomnavbarprovider.dart';
+class Menusubmain extends ConsumerWidget {
   const Menusubmain({Key? key}) : super(key: key);
-  @override
-  _MenusubmainState createState() => _MenusubmainState();
-}
-// ในไฟล์ widget.dart
 
-class _MenusubmainState extends State<Menusubmain> {
-  int _currentIndex = 1; // ย้ายมาที่นี่เพื่อจัดการสถานะ
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(navigationIndexProvider);
+    final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
+
     final List<MenuItem> menuData1 = [
       MenuItem(
         icon: Icons.newspaper,
@@ -327,28 +325,27 @@ class _MenusubmainState extends State<Menusubmain> {
     return Scaffold(
       appBar: const Appbarback(titleText: 'เมนูลัดทั้งหมด'),
       backgroundColor: const Color.fromARGB(255, 236, 233, 233),
-      bottomNavigationBar: BottomNavbar(
-        currentIndex: _currentIndex,
+     bottomNavigationBar: BottomNavbar(
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+          if (currentIndex == index) return; // ป้องกันการกดซ้ำหน้าเดิม
+          
+          navigationIndexNotifier.updateIndex(index); // อัปเดต index
 
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/news');
+              Navigator.pushReplacementNamed(context, '/news');
               break;
             case 1:
-              Navigator.pushNamed(context, '/student');
+              Navigator.pushReplacementNamed(context, '/student');
               break;
             case 2:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/');
               break;
             case 3:
-              Navigator.pushNamed(context, '/staff');
+              Navigator.pushReplacementNamed(context, '/staff');
               break;
             case 4:
-              Navigator.pushNamed(context, '/submenu');
+              Navigator.pushReplacementNamed(context, '/submenu');
               break;
           }
         },

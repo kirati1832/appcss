@@ -27,7 +27,7 @@ final navigationIndexProvider =
 class MyHomePage extends ConsumerWidget {
   MyHomePage({super.key, required this.title});
   final String title;
-
+  
   final List<String> gallery = [
     'https://lh3.googleusercontent.com/d/1Bgr-M0T23MfDuHNClEzw7w-BilSPFqIO=w1000',
     'https://lh3.googleusercontent.com/d/1wQmsiupsteMm1_n2bHbqXeAE6GNvYhDI=w1000',
@@ -65,36 +65,37 @@ class MyHomePage extends ConsumerWidget {
     "http://cs.kmutnb.ac.th/course-list_ms_se.jsp",
     "http://cs.kmutnb.ac.th/course-list_phd.jsp",
   ];
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final newsAsync = ref.watch(newsProvider);
-    final currentIndex = ref.watch(navigationIndexProvider);
+    final currentIndex = ref.watch(navigationIndexProvider); // อ่านค่าจาก Provider
     final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
 
     return Scaffold(
       appBar: Appbars(),
       backgroundColor: const Color.fromARGB(255, 236, 233, 233),
       bottomNavigationBar: BottomNavbar(
-        currentIndex: currentIndex,
         onTap: (index) {
-          navigationIndexNotifier.updateIndex(index);
+          if (currentIndex == index) return; // ป้องกันการกดซ้ำหน้าเดิม
+          
+          navigationIndexNotifier.updateIndex(index); // อัปเดต index
 
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/news');
+              Navigator.pushReplacementNamed(context, '/news');
               break;
             case 1:
-              Navigator.pushNamed(context, '/student');
+              Navigator.pushReplacementNamed(context, '/student');
               break;
             case 2:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/');
               break;
             case 3:
-              Navigator.pushNamed(context, '/staff');
+              Navigator.pushReplacementNamed(context, '/staff');
               break;
             case 4:
-              Navigator.pushNamed(context, '/submenu');
+              Navigator.pushReplacementNamed(context, '/submenu');
               break;
           }
         },
@@ -102,7 +103,7 @@ class MyHomePage extends ConsumerWidget {
       drawer: Sidebarmenus(),
       body: SingleChildScrollView(
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
             CustomCarouselSlider(images: gallery),
@@ -115,7 +116,6 @@ class MyHomePage extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             newsAsync.when(
               data: (newsList) => NewsCarouselSlider(newsList: newsList),
               loading: () => CircularProgressIndicator(),
@@ -131,7 +131,6 @@ class MyHomePage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 20),
-
             DetailCarouselSlide(
               images: images,
               title: titles,

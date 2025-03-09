@@ -26,25 +26,27 @@ class NewsListScreenRiverpod extends ConsumerWidget {
     final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
     return Scaffold(
       appBar: AppBar(title: Text("ข่าวสาร",style:TextStyle(color: Colors.white,)),backgroundColor: Colors.blue.shade800,),
-       bottomNavigationBar: BottomNavbar(
-        currentIndex: currentIndex,
+      bottomNavigationBar: BottomNavbar(
         onTap: (index) {
-          navigationIndexNotifier.updateIndex(index);
+          if (currentIndex == index) return; // ป้องกันการกดซ้ำหน้าเดิม
+          
+          navigationIndexNotifier.updateIndex(index); // อัปเดต index
+
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/news');
+              Navigator.pushReplacementNamed(context, '/news');
               break;
             case 1:
-              Navigator.pushNamed(context, '/student');
+              Navigator.pushReplacementNamed(context, '/student');
               break;
             case 2:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/');
               break;
             case 3:
-              Navigator.pushNamed(context, '/staff');
+              Navigator.pushReplacementNamed(context, '/staff');
               break;
             case 4:
-              Navigator.pushNamed(context, '/submenu');
+              Navigator.pushReplacementNamed(context, '/submenu');
               break;
           }
         },
