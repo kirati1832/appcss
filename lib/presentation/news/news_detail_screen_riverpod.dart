@@ -15,7 +15,7 @@ class NewsDetailRiverpod extends ConsumerWidget {
     String title = news['Title'] ?? 'ไม่มีชื่อเรื่อง';
     String type = news['type'] ?? 'ไม่ระบุประเภท';
     String postDate = news['PostDate'] ?? 'ไม่ระบุวันที่';
-    String message = news['Message'] ?? 'ไม่มีรายละเอียด';
+    String message = news['Message']?.replaceAll(RegExp(r'\s+'), ' ') ?? 'ไม่มีรายละเอียด';
 
     return Scaffold(
       appBar: AppBar(title: Text("รายละเอียดข่าว")),
@@ -69,7 +69,7 @@ class NewsDetailRiverpod extends ConsumerWidget {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    message,
+                    message, // แสดงผลข้อความที่แก้ไขให้มีช่องว่างเดียว
                     style: TextStyle(fontSize: 16),
                   ),
                 ],

@@ -1,7 +1,6 @@
 import 'package:appcsall/credit_page.dart';
 import 'package:appcsall/presentation/news/news_list_screen_riverpod.dart';
 import 'package:appcsall/presentation/page/stafflinkpage.dart';
-import 'package:appcsall/presentation/reg/finance.dart';
 import 'package:appcsall/presentation/student/student_advisors_screen.dart';
 import 'package:appcsall/presentation/student/student_screen.dart';
 import 'package:appcsall/presentation/webview/viewweb_csb_download.dart';

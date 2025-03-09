@@ -243,7 +243,7 @@ class PersonnelDetailScreen extends StatelessWidget {
                     SizedBox(height: 15),
                     if (educationList.isNotEmpty)
                       _buildSection("📘 วุฒิการศึกษา", educationList),
-
+SizedBox(height: 15),
                     if (researchList.isNotEmpty)
                       _buildSection("📑 ผลงานทางวิชาการ", researchList),
                   ],

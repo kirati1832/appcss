@@ -35,7 +35,8 @@ class _UrlState extends State<Url> {
               onNavigationRequest: (NavigationRequest request) {
                 // ตรวจสอบว่ามี URL ที่ต้องการดาวน์โหลดหรือไม่
                 if (request.url.endsWith(".pdf") ||
-                    request.url.endsWith(".jpg")) {
+                    request.url.endsWith(".jpg") ||
+                    request.url.endsWith(".docx")) {
                   downloadFile(request.url); // เรียกฟังก์ชันดาวน์โหลดไฟล์
                   return NavigationDecision
                       .prevent; // ป้องกันการเปิด URL ใน WebView
@@ -50,25 +51,34 @@ class _UrlState extends State<Url> {
   // ฟังก์ชันดาวน์โหลดไฟล์ไปยัง external storage
   Future<void> downloadFile(String url) async {
     try {
-      PermissionStatus status = await Permission.storage.status;
-      if (!status.isGranted) {
-        await Permission.storage.request();
-      }
+      // ขอ permission ก่อน
+      //PermissionStatus status = await Permission.storage.request();
 
       Dio dio = Dio();
+      dio.options.headers = {'Accept': 'application/octet-stream'};
 
-      // หาที่อยู่โฟลเดอร์ Downloads
+      // ตรวจสอบว่าโฟลเดอร์ Download มีอยู่หรือไม่
       Directory? downloadsDirectory = Directory('/storage/emulated/0/Download');
       if (!await downloadsDirectory.exists()) {
-        print("ไม่พบโฟลเดอร์ Downloads");
-        return;
+        print("ไม่พบโฟลเดอร์ Downloads, ใช้เส้นทางเริ่มต้น");
+        // ใช้เส้นทางเริ่มต้นที่เหมาะสมหากไม่พบโฟลเดอร์ Downloads
+        downloadsDirectory = Directory('/storage/emulated/0/');
       }
 
-      // กำหนดเส้นทางในการบันทึกไฟล์
-      String savePath =
-          '${downloadsDirectory.path}/downloaded_file_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      String extension =
+          url.endsWith(".jpg") || url.endsWith(".jpeg")
+              ? ".jpg"
+              : url.endsWith(".png")
+              ? ".png"
+              : url.endsWith(".docx")
+              ? ".docx"
+              : url.endsWith(".pdf")
+              ? ".pdf"
+              : ".unknown";
 
-      // ดาวน์โหลดไฟล์
+      String savePath =
+          '${downloadsDirectory.path}/downloaded_file_${DateTime.now().millisecondsSinceEpoch}$extension';
+
       await dio.download(url, savePath);
       print('ดาวน์โหลดไฟล์สำเร็จ: $savePath');
     } catch (e) {
