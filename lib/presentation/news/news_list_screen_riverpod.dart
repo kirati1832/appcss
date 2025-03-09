@@ -25,6 +25,7 @@ class NewsListScreenRiverpod extends ConsumerWidget {
     final currentIndex = ref.watch(navigationIndexProvider);
     final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 233, 233),
       appBar: AppBar(title: Text("ข่าวสาร",style:TextStyle(color: Colors.white,)),backgroundColor: Colors.blue.shade800,),
       bottomNavigationBar: BottomNavbar(
         onTap: (index) {

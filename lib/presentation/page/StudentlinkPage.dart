@@ -25,6 +25,7 @@ class StudentLinkPage extends StatelessWidget {
 
     return Scaffold(
       appBar: const Appbarback(titleText: 'Link สำหรับนักศึกษา',),
+      backgroundColor: const Color.fromARGB(255, 236, 233, 233),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: GridView.builder(

@@ -22,6 +22,7 @@ class _CSGreenState extends State<CSGreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 233, 233),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.fromLTRB(40, 10, 40, 0),

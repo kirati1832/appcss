@@ -13,6 +13,7 @@ class _OrganizationState extends State<Organization> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Appbarback(titleText: 'โครงสร้างการบริหารภาควิชาฯ'),
+      backgroundColor: const Color.fromARGB(255, 236, 233, 233),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(40),

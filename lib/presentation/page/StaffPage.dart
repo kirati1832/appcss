@@ -188,7 +188,7 @@ class PersonnelDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.deepPurple,foregroundColor: Colors.white,),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 236, 233, 233),
       body: SafeArea(
         child: Column(
           children: [
