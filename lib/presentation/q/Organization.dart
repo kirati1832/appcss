@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widget/appbar.dart';
+
 class Organization extends StatefulWidget {
   const Organization({super.key});
 
@@ -11,7 +12,7 @@ class _OrganizationState extends State<Organization> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Appbarback(titleText: 'โครงสร้างการบริหารภาควิชาฯ',),
+      appBar: Appbarback(titleText: 'โครงสร้างการบริหารภาควิชาฯ'),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(40),
@@ -25,14 +26,13 @@ class _OrganizationState extends State<Organization> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => FullScreenImage(),
-                    ),
+                    MaterialPageRoute(builder: (context) => FullScreenImage()),
                   );
                 },
-                child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    //SizedBox(height: MediaQuery.of(context).size.width * 0.5,width: MediaQuery.of(context).size.width * 0.8,),
                     Image.network(
                       "http://202.44.40.179/DATA_From_chiab/Image/img/organization.jpg",
                       width: MediaQuery.of(context).size.width * 0.8,

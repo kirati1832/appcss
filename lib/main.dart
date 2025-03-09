@@ -22,7 +22,6 @@ import 'package:appcsall/presentation/page/LoginPage.dart';
 import 'package:appcsall/presentation/page/url.dart';
 import 'presentation/q/CSGreen.dart';
 import 'presentation/q/Organization.dart';
-import 'presentation/q/course.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
@@ -55,7 +54,6 @@ class MyApp extends StatelessWidget {
           '/webview':(context)=>webview(),
           '/csgreen':(context)=>CSGreen(),
           '/organization':(context)=>Organization(),
-          '/course':(context)=>course(),
           '/stafflink':(context)=>LinkPage(),
           '/studentlink':(context)=>StudentLinkPage(),
           '/credit':(context)=>CreditsPage(),

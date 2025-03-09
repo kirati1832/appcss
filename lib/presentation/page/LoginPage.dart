@@ -1,174 +1,149 @@
-import 'dart:ui';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:appcsall/presentation/widget/widget.dart';
-class Logins extends StatelessWidget {
+import 'package:http/http.dart' as http;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../provider/userprovider.dart';
+
+class Logins extends ConsumerStatefulWidget {
   const Logins({Key? key}) : super(key: key);
+
+  @override
+  _LoginsState createState() => _LoginsState();
+}
+
+class _LoginsState extends ConsumerState<Logins> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  /// ✅ แสดง Popup แจ้งเตือน
+  void _showErrorPopup(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Log in failed"),
+          content: Text(message, style: const TextStyle(fontSize: 16)),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "OK",
+                style: TextStyle(fontSize: 16, color: Colors.blue),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+Future<void> _login() async {
+  setState(() => _isLoading = true);
+
+  final String username = _usernameController.text.trim();
+  final String password = _passwordController.text.trim();
+
+  try {
+    final response = await http.post(
+      Uri.parse('http://202.44.40.179:3000/auth/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'username': username, 'password': password}),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200 && data['token'] != null) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('jwt_token', data['token']);
+      await prefs.setString('username', username); // ✅ เก็บ username
+      
+      // ✅ ดึงข้อมูลจาก JWT (decode)
+      final userData = _decodeJWT(data['token']);
+      if (userData != null) {
+        await ref.read(userProvider.notifier).setUser(userData, username); // ✅ ส่ง username ไปที่ setUser()
+      }
+
+      // ✅ รอให้ setUser() ทำงานเสร็จก่อนจะเปลี่ยนหน้า
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.pushNamed(context, '/home');
+      });
+    } else {
+      _showErrorPopup(data['error'] ?? "Invalid credentials.");
+    }
+  } catch (error) {
+    _showErrorPopup("Network error. Please check your internet connection.");
+  } finally {
+    setState(() => _isLoading = false);
+  }
+}
+
+
+
+  /// ✅ ฟังก์ชัน Decode JWT Token เพื่อดึงข้อมูล User
+  Map<String, dynamic>? _decodeJWT(String token) {
+    try {
+      final parts = token.split('.');
+      if (parts.length != 3) return null;
+      final payload = jsonDecode(
+        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+      );
+      return payload;
+    } catch (e) {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Appbars(),
-        // Image.network('https://lh3.googleusercontent.com/proxy/Q7mRQExjKmP9DZ8IeHiXyCjwWvjJz9NOlDZu9xEQOq5dTFrDiHuYU-DmtLt8TYhnh028V99XDALD1BWsDhA',height: 80,),
-        body: Stack(children: [
-          // พื้นหลัง
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT03QFbf1m2wvFX7PRJEWoa4sLYUE-zCWjmLw&s'),
-                fit: BoxFit.cover,
-              ),
+      appBar: AppBar(title: const Text("Login")),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(labelText: "Username"),
             ),
-          ),
+            const SizedBox(height: 20),
 
-          // เอฟเฟกต์เบลอ + สีขาวขุ่น
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6), // ปรับค่าความเบลอ
-              child: Container(
-                color: Colors.white.withOpacity(0.001), // ปรับขาวขุ่น
-              ),
-            ),
-          ),
-
-          // เนื้อหา
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                    Colors.black, // เลือกสีที่ต้องการลบ
-                    BlendMode.dstOut, // ซ่อนสีที่กำหนด
+            TextField(
+              controller: _passwordController,
+              obscureText: _obscurePassword,
+              decoration: InputDecoration(
+                labelText: "Password",
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
                   ),
-                  
-                ),
-                SizedBox(height: 20),
-               
-              ],
-            ),
-          ),
-          Stack(
-            children: [
-              // ✅ พื้นหลังเต็มจอ
-              Container(
-                decoration: BoxDecoration(
-                  
+                  onPressed:
+                      () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                 ),
               ),
+            ),
+            const SizedBox(height: 30),
 
-              // ✅ Container ติดขอบล่าง เต็มความกว้าง
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: double.infinity, // ✅ ให้เต็มจอ
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9), // ✅ สีขาวโปร่งแสง
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20)), // ✅ มุมบนโค้ง
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26, // ✅ เงา
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                      ),
-                    ],
-                  ),
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // ✅ ข้อความ Welcome
-                      Text(
-                        "Welcome to",
-                        style: GoogleFonts.poppins(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 205, 33, 243)
-                        ),
-                      ),
-                      Text(
-                        "ComputerScience",
-                        style: GoogleFonts.poppins(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent
-                        ),
-                      ),
-                      SizedBox(height: 10),
-
-                      Image.network(
-                        'https://www.itdikmutnb.com/images/newsweb2018/logo_kmutnb_final.png',
-                        height: 28,
-                      ),
-                      /*Text(
-                        "KMUTNB",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),*/
-                      SizedBox(height: 20),
-                      // ✅ ปุ่ม Login
-                      Container(
-                        width: double.infinity, // ✅ ปรับให้เต็มจอ
-                        height: 40, // ✅ ความสูงของปุ่ม
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(10), // ✅ ทำให้ปุ่มมน
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.blue,
-                              Colors.purple
-                            ], // ✅ ไล่สีจากฟ้าไปม่วง
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/logins');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.transparent, // ✅ ทำให้ปุ่มโปร่งใส
-                            shadowColor: Colors.transparent, // ✅ ลบเงา
-                          ),
-                          child: Text("LOGIN",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16)),
-                        ),
-                      ),
-
-                      SizedBox(height: 10),
-
-                      // ✅ ปุ่ม Register
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            side: BorderSide(color: Colors.blue),
-                          ),
-                          child: Text("REGISTER",
-                              style: TextStyle(color: Colors.blue)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      )
-                    ],
-                  ),
-                ),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: _isLoading ? null : _login,
+                child:
+                    _isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text("LOGIN"),
               ),
-            ],
-          ),
-        ]));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
