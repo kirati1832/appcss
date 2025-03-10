@@ -3,7 +3,6 @@ import 'package:appcsall/presentation/news/news_list_screen_riverpod.dart';
 import 'package:appcsall/presentation/page/stafflinkpage.dart';
 import 'package:appcsall/presentation/student/student_advisors_screen.dart';
 import 'package:appcsall/presentation/student/student_screen.dart';
-import 'package:appcsall/presentation/webview/viewweb_csb_download.dart';
 import 'package:appcsall/presentation/page/Footer.dart';
 import 'package:appcsall/presentation/page/HomePage.dart';
 import 'package:appcsall/presentation/page/HistoryPage.dart';
@@ -45,7 +44,6 @@ class MyApp extends StatelessWidget {
           '/login':(context)=>Logins(),
           '/logins':(context)=>LoginPage(),
           '/register':(context)=>RegisterPage(),
-          '/webview':(context)=>webview(),
           '/csgreen':(context)=>CSGreen(),
           '/organization':(context)=>Organization(),
           '/stafflink':(context)=>LinkPage(),
