@@ -1,51 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:appcsall/provider/loginprovider.dart'; // ✅ Import authProvider
 
-class SidebarMenu extends StatelessWidget {
+class SidebarMenu extends ConsumerWidget {
   final List<MenuItem> menuItems;
 
-  const SidebarMenu({
-    Key? key,
-    required this.menuItems,
-  }) : super(key: key);
+  const SidebarMenu({Key? key, required this.menuItems}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider); // ✅ ดึง authProvider
+    final username = authState.when(
+      data: (auth) => auth.username?.isNotEmpty == true ? auth.username! : "Guest",
+      loading: () => "กำลังโหลด...",
+      error: (error, _) => "Error",
+    );
+
     return Drawer(
       child: Container(
-        color: Colors.blue[800], // กำหนดให้สีฟ้าครอบคลุมทั้งหมด
+        color: Colors.blue[800], // พื้นหลัง Sidebar
         child: Column(
           children: [
-            /// **Header ของ Sidebar (เฉพาะโลโก้มีพื้นหลังสีขาว)**
+            /// **Header ของ Sidebar (แสดง Username)**
             Container(
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
-              color: Colors.white, // ทำให้เฉพาะแถบโลโก้เป็นสีขาว
+              color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// **โลโก้**
                   Image.network(
                     'http://cs.kmutnb.ac.th/img/logo.png',
                     height: 100,
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 10),
+                  Text(
+                    "Welcome, $username", // ✅ แสดงชื่อผู้ใช้
+                    style: GoogleFonts.kanit(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
                 ],
               ),
             ),
 
-            /// **รายการเมนู (พื้นหลังสีน้ำเงิน)**
+            /// **รายการเมนู**
             Expanded(
               child: Container(
-                width: double.infinity, // ให้เต็มจอ
-                height: double.infinity, // ขยายเต็มพื้นที่
-                color: Colors.blue[800], // สีพื้นหลังของเมนู
+                width: double.infinity,
+                color: Colors.blue[800],
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
                     const SizedBox(height: 10),
                     ...menuItems.map((item) => _buildDrawerItem(context, item)).toList(),
+                    const SizedBox(height: 20),
+
+                    /// **ปุ่ม Logout**
+                    ListTile(
+                      leading: Icon(Icons.logout, color: Colors.white),
+                      title: Text("Logout", style: GoogleFonts.kanit(fontSize: 16, color: Colors.white)),
+                      onTap: () {
+                        ref.read(authProvider.notifier).logout();
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -56,15 +76,12 @@ class SidebarMenu extends StatelessWidget {
     );
   }
 
-  /// **Widget สำหรับสร้างเมนู (รองรับเมนูหลักและเมนูย่อย)**
+  /// **สร้าง Widget เมนู**
   Widget _buildDrawerItem(BuildContext context, MenuItem item) {
     if (item.subItems.isNotEmpty) {
       return ExpansionTile(
         leading: Icon(item.icon, color: Colors.white),
-        title: Text(
-          item.text,
-          style: GoogleFonts.kanit(fontSize: 16, color: Colors.white),
-        ),
+        title: Text(item.text, style: GoogleFonts.kanit(fontSize: 16, color: Colors.white)),
         children: item.subItems
             .map((subItem) => Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -75,13 +92,10 @@ class SidebarMenu extends StatelessWidget {
     } else {
       return ListTile(
         leading: Icon(item.icon, color: Colors.white),
-        title: Text(
-          item.text,
-          style: GoogleFonts.kanit(fontSize: 16, color: Colors.white),
-        ),
+        title: Text(item.text, style: GoogleFonts.kanit(fontSize: 16, color: Colors.white)),
         tileColor: Colors.blue[800],
-        hoverColor: Colors.blue[600], // เปลี่ยนสีเมื่อโฮเวอร์
-        selectedTileColor: Colors.blue[700], // เปลี่ยนสีเมื่อเลือก
+        hoverColor: Colors.blue[600],
+        selectedTileColor: Colors.blue[700],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -91,17 +105,12 @@ class SidebarMenu extends StatelessWidget {
   }
 }
 
-/// **Model สำหรับสร้างเมนู**
+/// **Model สำหรับเมนู**
 class MenuItem {
   final IconData icon;
   final String text;
   final VoidCallback onTap;
   final List<MenuItem> subItems;
 
-  MenuItem({
-    required this.icon,
-    required this.text,
-    required this.onTap,
-    this.subItems = const [], // ค่าเริ่มต้นเป็นเมนูหลัก
-  });
+  MenuItem({required this.icon, required this.text, required this.onTap, this.subItems = const []});
 }

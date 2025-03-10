@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class StudentAdvisorsScreen extends StatefulWidget {
   StudentAdvisorsScreen({super.key});
 
@@ -21,7 +21,7 @@ class _StudentAdvisorsScreenState extends State<StudentAdvisorsScreen> {
 
   Future<void> fetchJsonData() async {
     final response = await http.get(Uri.parse(
-        'http://202.44.40.179/Data_From_Chiab/json/advisorsbyyears.json'));
+        '${dotenv.env['BASE_URL']}/Data_From_Chiab/json/advisorsbyyears.json'));
     if (response.statusCode == 200) {
       setState(() {
         advisorsByYear = json.decode(utf8.decode(response.bodyBytes));

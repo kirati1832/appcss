@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widget/appbar.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class Organization extends StatefulWidget {
   const Organization({super.key});
 
@@ -35,7 +35,7 @@ class _OrganizationState extends State<Organization> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.network(
-                      "http://202.44.40.179/DATA_From_chiab/Image/img/organization.jpg",
+                      "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/organization.jpg",
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.width * 0.6,
                       fit: BoxFit.cover,
@@ -71,7 +71,7 @@ class FullScreenImage extends StatelessWidget {
           minScale: 0.5,
           maxScale: 4.0,
           child: Image.network(
-            "http://202.44.40.179/DATA_From_chiab/Image/img/organization.jpg",
+            "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/organization.jpg",
           ),
         ),
       ),

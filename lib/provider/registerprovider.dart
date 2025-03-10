@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'hashfunction.dart'; // ✅ ใช้ฟังก์ชันแฮชพาสเวิร์ด
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 /// ✅ Provider สำหรับการลงทะเบียน
 final registerProvider = StateNotifierProvider<RegisterNotifier, AsyncValue<String?>>((ref) {
   return RegisterNotifier();
@@ -17,7 +17,7 @@ class RegisterNotifier extends StateNotifier<AsyncValue<String?>> {
     state = const AsyncValue.loading();
     try {
       final response = await http.post(
-        Uri.parse('http://202.44.40.179:3000/auth/register'),
+        Uri.parse('${dotenv.env['BASE_URL']}:3000/auth/register'),
         headers: {'Content-Type': 'application/json'}, // ✅ เพิ่ม Header
         body: jsonEncode({
           'username': username,

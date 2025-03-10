@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'detail_carousel_slide_detailpicture.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class CSGreen extends StatefulWidget {
   const CSGreen({super.key});
 
@@ -9,14 +10,14 @@ class CSGreen extends StatefulWidget {
 
 class _CSGreenState extends State<CSGreen> {
   final List<String> images = [
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/1_0.png",
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/2_0.png",
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/7%20policies.jpg",
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/Campaign_quit%20smoking.png",
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/Environmental%20goals.jpg",
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/dayhavethink.jpg",
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/policies_sci.jpg",
-    "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/smoking.png",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/1_0.png",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/2_0.png",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/7%20policies.jpg",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/Campaign_quit%20smoking.png",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/Environmental%20goals.jpg",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/dayhavethink.jpg",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/policies_sci.jpg",
+    "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/smoking.png",
   ];
  
   @override
@@ -29,7 +30,7 @@ class _CSGreenState extends State<CSGreen> {
           child: Column(
             children: [
               Image.network(
-                "http://202.44.40.179/DATA_From_chiab/Image/img/csgogreen/greenoffice.png",
+                "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/greenoffice.png",
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

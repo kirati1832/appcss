@@ -7,6 +7,7 @@ import '../page/url.dart';
 import '../../../bottom_navbar.dart';
 import 'student_advisors_screen.dart';
 import 'package:appcsall/provider/bottomnavbarprovider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class StudentScreen extends ConsumerStatefulWidget {
   @override
   _StudentScreenState createState() => _StudentScreenState();
@@ -17,7 +18,7 @@ class _StudentScreenState extends ConsumerState<StudentScreen> {
 
   Future<List<dynamic>> fetchCourseData() async {
     final url =
-        Uri.parse('http://202.44.40.179/Data_From_Chiab/json/courseData.json');
+        Uri.parse('${dotenv.env['BASE_URL']}/Data_From_Chiab/json/courseData.json');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {

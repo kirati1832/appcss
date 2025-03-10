@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../provider/userprovider.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class Logins extends ConsumerStatefulWidget {
   const Logins({Key? key}) : super(key: key);
 
@@ -50,7 +50,7 @@ Future<void> _login() async {
 
   try {
     final response = await http.post(
-      Uri.parse('http://202.44.40.179:3000/auth/login'),
+      Uri.parse('${dotenv.env['BASE_URL']}/auth/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'username': username, 'password': password}),
     );

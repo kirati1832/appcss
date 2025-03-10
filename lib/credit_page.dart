@@ -2,99 +2,90 @@ import 'package:flutter/material.dart';
 
 class CreditsPage extends StatelessWidget {
   final List<Map<String, String>> teamMembers = [
-    {
-      'name': 'ธีราพัฒน์ จิรภาสนิธิเลิศ',
-      'ID': '6504062610137',
-      'role': 'Project Manager'
-    },
-    {
-      'name': 'กีรติ บุญเทศ',
-      'ID': '6504062610048',
-      'role': 'Frontend Developer'
-    },
-    {
-      'name': 'ศิวกร ตันติโรจน์',
-      'ID': '6504062610277',
-      'role': 'Frontend Developer'
-    },
-    {
-      'name': 'วรวิทย์ กิมเฮงหลี',
-      'ID': '6504062610226',
-      'role': 'Backend Developer'
-    },
+    {'name': 'ธีราพัฒน์ จิรภาสนิธิเลิศ', 'ID': '6504062610137', 'role': 'Project Manager'},
+    {'name': 'กีรติ บุญเทศ', 'ID': '6504062610048', 'role': 'Frontend Developer'},
+    {'name': 'ศิวกร ตันติโรจน์', 'ID': '6504062610277', 'role': 'Frontend Developer'},
+    {'name': 'วรวิทย์ กิมเฮงหลี', 'ID': '6504062610226', 'role': 'Backend Developer'},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor:  Colors.lightBlue,
+        title: Text('ทีมงานพัฒนา', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.lightBlue,
+        foregroundColor: Colors.white,
         elevation: 0,
-        title: Text(
-          'ทีมงานพัฒนา',
-          style: TextStyle(
-              color: const Color.fromARGB(255, 255, 255, 255),
-              fontWeight: FontWeight.bold,
-              fontSize: 20),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15,),
+            /// ✅ รายชื่อทีมงาน
+            Expanded(
+              child: ListView.builder(
+                itemCount: teamMembers.length,
+                itemBuilder: (context, index) {
+                  return _buildTeamMemberCard(teamMembers[index]);
+                },
+              ),
+            ),
+          ],
         ),
       ),
-      body: Container(
-        color: const Color.fromARGB(255, 236, 233, 233), // Background color for the body
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView.builder(
-            itemCount: teamMembers.length,
-            itemBuilder: (context, index) {
-              return Card(
-                color: Colors.white, // Background color for the Card
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                elevation: 4,
-                margin: EdgeInsets.symmetric(vertical: 8),
-                child: ListTile(
-                  leading:
-                      Icon(Icons.person, size: 40, color: Colors.blueAccent),
-                  title: Text(
-                    teamMembers[index]['name']!,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue), // Text color for the name
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'ID: ${teamMembers[index]['ID']!}',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue), // Text color for the ID
-                      ),
-                      Text(
-                        'Role: ${teamMembers[index]['role']!}',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue), // Text color for the role
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
+    );
+  }
+
+  /// ✅ ฟังก์ชันสร้าง UI สำหรับแต่ละทีม
+  Widget _buildTeamMemberCard(Map<String, String> member) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.blueAccent.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 6,
+            offset: Offset(0, 3),
           ),
-        ),
+        ],
+      ),
+      child: Row(
+        children: [
+          /// ✅ ไอคอนโปรไฟล์
+          CircleAvatar(
+            radius: 25,
+            backgroundColor: Colors.blueAccent.shade100,
+            child: Icon(Icons.person, size: 30, color: Colors.white),
+          ),
+          SizedBox(width: 12),
+
+          /// ✅ ข้อมูลทีมงาน
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  member['name']!,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
+                ),
+                SizedBox(height: 4),
+                Text("ID: ${member['ID']!}", style: TextStyle(fontSize: 14, color: Colors.black54)),
+                Text("Role: ${member['role']!}", style: TextStyle(fontSize: 14, color: Colors.black54)),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 void main() {
-  runApp(MaterialApp(
-    home: CreditsPage(),
-  ));
+  runApp(MaterialApp(home: CreditsPage()));
 }

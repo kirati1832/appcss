@@ -2,19 +2,30 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'hashfunction.dart';
-final authProvider = StateNotifierProvider<AuthNotifier, AsyncValue<String?>>((ref) {
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+/// ✅ สร้าง State Model เก็บ username และ token
+class AuthState {
+  final String? token;
+  final String? username;
+
+  AuthState({this.token, this.username});
+}
+
+/// ✅ Provider สำหรับจัดการ Login State
+final authProvider = StateNotifierProvider<AuthNotifier, AsyncValue<AuthState>>((ref) {
   return AuthNotifier();
 });
 
-class AuthNotifier extends StateNotifier<AsyncValue<String?>> {
-  AuthNotifier() : super(const AsyncValue.data(null));
+class AuthNotifier extends StateNotifier<AsyncValue<AuthState>> {
+  AuthNotifier() : super( AsyncValue.data(AuthState()));
 
-  /// ✅ ฟังก์ชัน Login (ดึง JWT Token)
+  /// ✅ ฟังก์ชัน Login (ดึง JWT Token และ Username)
   Future<void> login(String username, String password) async {
     state = const AsyncValue.loading();
     try {
       final response = await http.post(
-        Uri.parse('http://202.44.40.179:3000/auth/login'),
+        Uri.parse('${dotenv.env['BASE_URL']}:3000/auth/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'username': username,
@@ -24,11 +35,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<String?>> {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        String token = data['token'];
-        print('✅ JWT Token: $token');
-        state = AsyncValue.data(token); // ✅ เก็บ Token
+        state = AsyncValue.data(AuthState(token: data['token'], username: username)); // ✅ เก็บ token และ username
       } else {
-        print('❌ ล็อกอินล้มเหลว: ${response.body}');
         state = AsyncValue.error("Login Failed", StackTrace.current);
       }
     } catch (e) {
@@ -36,45 +44,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<String?>> {
     }
   }
 
-  /// ✅ ฟังก์ชัน Logout (เคลียร์ Token)
   void logout() {
-    state = const AsyncValue.data(null);
+    state = AsyncValue.data(AuthState());
   }
 }
-/*
-/// ✅ Provider สำหรับจัดการ Login State
-final authProvider = StateNotifierProvider<AuthNotifier, AsyncValue<String?>>((
-  ref,
-) {
-  return AuthNotifier();
-});
-
-class AuthNotifier extends StateNotifier<AsyncValue<String?>> {
-  AuthNotifier() : super(const AsyncValue.data(null));
-  final url = Uri.parse('http://202.44.40.179:3000/auth/login');
-  /// ✅ ฟังก์ชัน Login
-  Future<void> login(String username, String password) async {
-    state = const AsyncValue.loading();
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'username': '${username}',
-          'password': '${hashPassword(password)}', // แฮชพาสเวิร์ดก่อนส่ง
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        state = AsyncValue.data(data['token']); // ✅ เก็บ Token
-      } else {
-        print(response.body);
-        state = AsyncValue.error("Login Failed", StackTrace.current);
-      }
-    } catch (e) {
-      state = AsyncValue.error(e.toString(), StackTrace.current);
-    }
-  }
-}
-*/
