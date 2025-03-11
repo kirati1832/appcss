@@ -21,7 +21,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:appcsall/provider/connectivityProvider.dart';
 import 'package:appcsall/presentation/page/NoInternetScreen.dart';
-
+import 'package:appcsall/presentation/page/Forgetpassword.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
@@ -68,6 +68,7 @@ class MyApp extends ConsumerWidget {
         '/news': (context) => NewsListScreenRiverpod(),
         '/student': (context) => StudentScreen(),
         '/advisors': (context) => StudentAdvisorsScreen(),
+        '/forgetp': (context) => ForgotPasswordPage(),
       },
     );
   }
