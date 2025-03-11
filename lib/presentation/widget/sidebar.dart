@@ -36,11 +36,7 @@ class SidebarMenu extends ConsumerWidget {
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    "Welcome, $username", // ✅ แสดงชื่อผู้ใช้
-                    style: GoogleFonts.kanit(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 5),
+                  
                 ],
               ),
             ),
@@ -53,6 +49,15 @@ class SidebarMenu extends ConsumerWidget {
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(15,20,0,0),
+                      child:
+                        Text(
+                          "Welcome, $username", // ✅ แสดงชื่อผู้ใช้
+                          style: GoogleFonts.kanit(fontSize: 25, fontWeight: FontWeight.bold,color: Colors.white),
+                        ),
+                    ),
+                  const SizedBox(height: 5),
                     const SizedBox(height: 10),
                     ...menuItems.map((item) => _buildDrawerItem(context, item)).toList(),
                     const SizedBox(height: 20),
