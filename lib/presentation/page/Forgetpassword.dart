@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:appcsall/provider/forgetpasswordprovider.dart'; // ✅ Import Provider
 
-class ForgotPasswordPage extends StatefulWidget {
+class ForgotPasswordPage extends ConsumerStatefulWidget {
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // ✅ ใช้ FormKey ตรวจสอบอีเมล
+  final _formKey = GlobalKey<FormState>();
 
-  void _sendResetLink() {
+  /// ✅ ฟังก์ชันส่งอีเมลผ่าน Provider
+  void _sendResetLink() async {
     if (_formKey.currentState!.validate()) {
-      // ✅ ถ้าอีเมลถูกต้อง ให้ดำเนินการต่อ
-      print("📩 Sending password reset email to: ${_emailController.text}");
-      
-      // **TODO: ส่งอีเมลไปยัง API**
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Password reset link sent to ${_emailController.text}"),
-          backgroundColor: Colors.green,
-        ),
-      );
+      final notifier = ref.read(forgotPasswordProvider.notifier);
+      await notifier.sendResetLink(_emailController.text.trim(),_usernameController.text.trim());
+
+      // อ่านค่า State ปัจจุบัน
+      final responseState = ref.read(forgotPasswordProvider);
+      responseState.whenData((message) {
+        if (message != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message), backgroundColor: Colors.green),
+          );
+        }
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final resetState = ref.watch(forgotPasswordProvider);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -34,7 +42,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /// ✅ Title
                 const Text(
                   "Forgot Password",
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
@@ -46,17 +53,34 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 const SizedBox(height: 30),
 
-                /// ✅ ช่องกรอก Email พร้อม Validation
+                /// ✅ Form กรอกอีเมล
                 Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Email",
+                        "Username",
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _usernameController,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: "Enter your Username",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(Icons.people),
+                        ),
+                      ),
+                      SizedBox(height: 15,),
+                      const Text(
+                        "Email",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 8,),
                       TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -90,21 +114,32 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: _sendResetLink,
+                    onPressed: resetState is AsyncLoading ? null : _sendResetLink,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text(
-                      "Send",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    child: resetState.when(
+                      data: (_) => const Text("Send", style: TextStyle(color: Colors.white, fontSize: 16)),
+                      loading: () => const CircularProgressIndicator(color: Colors.white),
+                      error: (err, _) => const Text("Send", style: TextStyle(color: Colors.white, fontSize: 16)),
                     ),
                   ),
                 ),
 
                 const SizedBox(height: 20),
+
+                /// ✅ แสดง Error Message (ถ้ามี)
+                if (resetState is AsyncError)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      "❌ ${resetState.error}",
+                      style: const TextStyle(color: Colors.red, fontSize: 14),
+                    ),
+                  ),
 
                 /// ✅ ปุ่ม Back to Login
                 GestureDetector(

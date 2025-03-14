@@ -74,6 +74,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     registerState.whenData((result) {
       if (result == 'success') {
         Navigator.pushReplacementNamed(context, '/logins');
+      }else{
+        print('error: ${result}');
       }
     });
   }
@@ -108,7 +110,19 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
               onChanged: (_) => setState(() {}),
             ),
             const SizedBox(height: 20),
+            const Text("Username", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            const SizedBox(height: 8),
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                hintText: "KingFORZAA",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                prefixIcon: const Icon(Icons.people),
+              ),
+              onChanged: (_) => setState(() {}),
+            ),
 
+            const SizedBox(height: 20),
             // ✅ ช่อง Password
             const Text("Password", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
             const SizedBox(height: 8),
