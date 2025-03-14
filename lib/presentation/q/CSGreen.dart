@@ -19,7 +19,7 @@ class _CSGreenState extends State<CSGreen> {
     "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/policies_sci.jpg",
     "${dotenv.env['BASE_URL']}/DATA_From_chiab/Image/img/csgogreen/smoking.png",
   ];
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

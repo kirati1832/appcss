@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// ✅ Provider สำหรับ JWT และ Users List
 final jwtProvider = StateNotifierProvider<JwtNotifier, JwtState>((ref) {
@@ -35,7 +36,7 @@ class JwtNotifier extends StateNotifier<JwtState> {
 
     try {
       final response = await http.get(
-        Uri.parse('http://202.44.40.179:3000/user'),
+        Uri.parse('${dotenv.env['BASE_URL']}:3000/user'),
         headers: {'Authorization': 'Bearer $token'},
       );
 

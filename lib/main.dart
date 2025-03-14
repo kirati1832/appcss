@@ -18,7 +18,6 @@ import 'presentation/q/Organization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:lottie/lottie.dart';
 import 'package:appcsall/provider/connectivityProvider.dart';
 import 'package:appcsall/presentation/page/NoInternetScreen.dart';
 import 'package:appcsall/presentation/page/Forgetpassword.dart';

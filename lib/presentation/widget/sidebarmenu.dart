@@ -30,11 +30,7 @@ class Sidebarmenus extends ConsumerWidget implements PreferredSizeWidget {
 
         /// ✅ แสดง `Login` และ `Signup` **ถ้ายังไม่ล็อกอิน**
         if (!isLoggedIn) ...[
-          MenuItem(
-            icon: Icons.signpost_outlined,
-            text: 'Signup',
-            onTap: () => Navigator.pushNamed(context, '/register'),
-          ),
+          
           MenuItem(
             icon: Icons.login_rounded,
             text: 'Login',

@@ -12,7 +12,7 @@ class PersonnelScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final personnelAsync = ref.watch(personnelProvider);
     final currentIndex = ref.watch(navigationIndexProvider);
-    final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
+    //final navigationIndexNotifier = ref.read(navigationIndexProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text("บุคลากร"),

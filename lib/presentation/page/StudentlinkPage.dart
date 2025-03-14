@@ -8,7 +8,7 @@ class StudentLinkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<MenuItem> menuItems = [
-      MenuItem(icon: Icons.table_chart, label: "ตารางสอน/ตารางสอบ", url: "http://klogic.kmutnb.ac.th:8080/kris/tess/dataQuery.jsp"),
+      MenuItem(icon: Icons.table_chart, label: "ตารางสอน/ตารางสอบ", url: "https://reg3.kmutnb.ac.th/registrar/home"),
       MenuItem(icon: Icons.calendar_today, label: "ปฏิทินการศึกษา", url: "https://reg.kmutnb.ac.th/registrar/home"),
       MenuItem(icon: Icons.payment, label: "ระบบการชำระเงินนักศึกษาใหม่", url: "https://newstudent.kmutnb.ac.th/Student/StudentLogin"),
       MenuItem(icon: Icons.school, label: "ระบบขึ้นทะเบียนนักศึกษาใหม่", url: "http://stdregis.kmutnb.ac.th/"),

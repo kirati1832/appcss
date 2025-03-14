@@ -1,15 +1,11 @@
 import 'package:appcsall/bottom_navbar.dart';
-import 'package:appcsall/presentation/page/url.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:appcsall/presentation/widget/widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'Footer.dart';
 import '../widget/sidebarmenu.dart';
 import '../widget/detail_carousel_slide.dart';
 import '../../provider/news_provider.dart';
 import '../widget/news_carousel_slider.dart';
-import '../news/news_list_screen_riverpod.dart';
 
 // สร้าง StateNotifier สำหรับการจัดการ _currentIndex
 class NavigationIndexNotifier extends StateNotifier<int> {
