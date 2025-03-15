@@ -1,35 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:appcsall/presentation/widget/widget.dart' ;
+import 'package:appcsall/presentation/widget/widget.dart';
 
 class StudentLinkPage extends StatelessWidget {
   const StudentLinkPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<MenuItem> menuItems = [
-      MenuItem(icon: Icons.table_chart, label: "ตารางสอน/ตารางสอบ", url: "https://reg3.kmutnb.ac.th/registrar/home"),
-      MenuItem(icon: Icons.calendar_today, label: "ปฏิทินการศึกษา", url: "https://reg.kmutnb.ac.th/registrar/home"),
-      MenuItem(icon: Icons.payment, label: "ระบบการชำระเงินนักศึกษาใหม่", url: "https://newstudent.kmutnb.ac.th/Student/StudentLogin"),
-      MenuItem(icon: Icons.school, label: "ระบบขึ้นทะเบียนนักศึกษาใหม่", url: "http://stdregis.kmutnb.ac.th/"),
-      MenuItem(icon: Icons.person_add, label: "ระบบลงทะเบียน", url: "http://klogic.kmutnb.ac.th:8080/kris/index.jsp"),
-      MenuItem(icon: Icons.assignment, label: "ระบบดูผลการเรียน", url: "http://grade-report.icit.kmutnb.ac.th/"),
-      MenuItem(icon: Icons.checklist, label: "ระบบประเมินการสอน", url: "https://reg1.kmutnb.ac.th/registrar/home"),
-      MenuItem(icon: Icons.live_tv, label: "ระบบคำร้องออนไลน์", url: "https://reg3.kmutnb.ac.th/registrar/home"),
-      MenuItem(icon: Icons.verified_user, label: "ระบบขอเอกสารสำคัญทางการศึกษา", url: "http://e-service.acdserv.kmutnb.ac.th/regReqDoc/login/"),
-      MenuItem(icon: Icons.account_balance, label: "ระบบ e-Studentloan\nสำหรับผู้กู้ กยศ. และ กรอ.", url: "https://eservices.studentloan.or.th/SLFSTUDENT/html/index.html"),
-      MenuItem(icon: Icons.sync_alt, label: "บริการซอฟต์แวร์ลิขสิทธิ์", url: "https://software.kmutnb.ac.th/"),
-      MenuItem(icon: Icons.school_outlined, label: "บัณฑิตวิทยาลัย", url: "https://www.grad.kmutnb.ac.th/index.php"),
-      MenuItem(icon: Icons.link, label: "แบบฟอร์มขออนุมัติตัวนักศึกษา", url: "https://docs.google.com/forms/d/e/1FAIpQLSfBW8Dj47DlKvgdTu2EHHeQpTrCeBlJP0yu_lbuDPC4gn-8fA/viewform?vc=0&c=0&w=1&flr=0&pli=1"),
+    final List<MenuItem> menuItems2 = [
+      MenuItem(
+        icon: Icons.table_chart,
+        label: "ตารางสอน/ตารางสอบ",
+        onTap:
+            () => launchUrl(
+              Uri.parse("https://reg3.kmutnb.ac.th/registrar/home"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.calendar_today,
+        label: "ปฏิทินการศึกษา",
+        onTap:
+            () =>
+                launchUrl(Uri.parse("https://reg.kmutnb.ac.th/registrar/home")),
+      ),
+      MenuItem(
+        icon: Icons.payment,
+        label: "ระบบการชำระเงินนักศึกษาใหม่",
+        onTap:
+            () => launchUrl(
+              Uri.parse("https://newstudent.kmutnb.ac.th/Student/StudentLogin"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.school,
+        label: "ระบบขึ้นทะเบียนนักศึกษาใหม่",
+        onTap: () => launchUrl(Uri.parse("http://stdregis.kmutnb.ac.th/")),
+      ),
+      MenuItem(
+        icon: Icons.person_add,
+        label: "ระบบลงทะเบียน",
+        onTap:
+            () => launchUrl(
+              Uri.parse("http://klogic.kmutnb.ac.th:8080/kris/index.jsp"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.assignment,
+        label: "ระบบดูผลการเรียน",
+        onTap:
+            () =>
+                launchUrl(Uri.parse("http://grade-report.icit.kmutnb.ac.th/")),
+      ),
+      MenuItem(
+        icon: Icons.checklist,
+        label: "ระบบประเมินการสอน",
+        onTap:
+            () => launchUrl(
+              Uri.parse("https://reg1.kmutnb.ac.th/registrar/home"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.live_tv,
+        label: "ระบบคำร้องออนไลน์",
+        onTap:
+            () => launchUrl(
+              Uri.parse("https://reg3.kmutnb.ac.th/registrar/home"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.verified_user,
+        label: "ระบบขอเอกสารสำคัญทางการศึกษา",
+        onTap:
+            () => launchUrl(
+              Uri.parse(
+                "http://e-service.acdserv.kmutnb.ac.th/regReqDoc/login/",
+              ),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.account_balance,
+        label: "ระบบ e-Studentloan\nสำหรับผู้กู้ กยศ. และ กรอ.",
+        onTap:
+            () => launchUrl(
+              Uri.parse(
+                "https://eservices.studentloan.or.th/SLFSTUDENT/html/index.html",
+              ),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.sync_alt,
+        label: "บริการซอฟต์แวร์ลิขสิทธิ์",
+        onTap: () => launchUrl(Uri.parse("https://software.kmutnb.ac.th/")),
+      ),
+      MenuItem(
+        icon: Icons.school_outlined,
+        label: "บัณฑิตวิทยาลัย",
+        onTap:
+            () =>
+                launchUrl(Uri.parse("https://www.grad.kmutnb.ac.th/index.php")),
+      ),
+      MenuItem(
+        icon: Icons.link,
+        label: "แบบฟอร์มขออนุมัติตัวนักศึกษา",
+        onTap:
+            () => launchUrl(
+              Uri.parse(
+                "https://docs.google.com/forms/d/e/1FAIpQLSfBW8Dj47DlKvgdTu2EHHeQpTrCeBlJP0yu_lbuDPC4gn-8fA/viewform?vc=0&c=0&w=1&flr=0&pli=1",
+              ),
+            ),
+      ),
     ];
 
     return Scaffold(
-      appBar: const Appbarback(titleText: 'Link สำหรับนักศึกษา',),
+      appBar: const Appbarback(titleText: 'Link สำหรับนักศึกษา'),
       backgroundColor: const Color.fromARGB(255, 236, 233, 233),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: GridView.builder(
-          itemCount: menuItems.length,
+          itemCount: menuItems2.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, // ปรับเป็น 4 คอลัมน์ตามภาพ
             crossAxisSpacing: 10,
@@ -37,7 +125,7 @@ class StudentLinkPage extends StatelessWidget {
             childAspectRatio: 1.2, // ปรับสัดส่วนให้ใกล้เคียง
           ),
           itemBuilder: (context, index) {
-            return _buildMenuItem(menuItems[index]);
+            return _buildMenuItem(menuItems2[index]);
           },
         ),
       ),
@@ -47,7 +135,7 @@ class StudentLinkPage extends StatelessWidget {
   /// **Widget สำหรับแสดงเมนูแต่ละตัว**
   Widget _buildMenuItem(MenuItem item) {
     return GestureDetector(
-      onTap: () => _launchURL(item.url),
+      onTap: item.onTap,
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -66,22 +154,13 @@ class StudentLinkPage extends StatelessWidget {
       ),
     );
   }
-
-  /// **ฟังก์ชันเปิด URL**
-  void _launchURL(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      throw 'ไม่สามารถเปิด URL ได้: $url';
-    }
-  }
 }
 
 /// **Model สำหรับเมนู**
 class MenuItem {
   final IconData icon;
   final String label;
-  final String url;
+  final VoidCallback onTap;
 
-  MenuItem({required this.icon, required this.label, required this.url});
+  MenuItem({required this.icon, required this.label, required this.onTap});
 }

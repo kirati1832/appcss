@@ -1,23 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:appcsall/presentation/widget/widget.dart' ;
+import 'package:appcsall/presentation/widget/widget.dart';
+
 class LinkPage extends StatelessWidget {
   const LinkPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<MenuItem> menuItems = [
-      MenuItem(icon: Icons.group, label: "ระบบเพื่ออำนวย\nทะเบียนนักศึกษา", onTap: () => launchUrl(Uri.parse("http://klogic.kmutnb.ac.th:8080/kris/index.jsp"))),
-      MenuItem(icon: Icons.description, label: "ระบบส่ง\nทกรด", onTap: () => launchUrl(Uri.parse("https://reg1.kmutnb.ac.th/registrar/home"))),
-      MenuItem(icon: Icons.bar_chart, label: "ระบบเพื่อรายงาน\nข้อมูลและสถิติ", onTap: () => launchUrl(Uri.parse("https://ureport.kmutnb.ac.th/"))),
-      MenuItem(icon: Icons.window, label: "Microsoft Azure Dev Tool\nfor Teaching", onTap: () => launchUrl(Uri.parse("https://azureforeducation.microsoft.com/devtools"))),
-      MenuItem(icon: Icons.cast_for_education, label: "KMUTNB\nOnline Learning", onTap: () => launchUrl(Uri.parse("https://www.kmutnb.ac.th/kmutnb-online-learning.aspx"))),
-      MenuItem(icon: Icons.compare_arrows, label: "บริการซอฟต์แวร์\nลิขสิทธิ์", onTap: () => launchUrl(Uri.parse("https://software.kmutnb.ac.th/"))),
-      MenuItem(icon: Icons.account_balance, label: "ระบบบริหาร\nลูกหนี้เงินยืม", onTap: () => launchUrl(Uri.parse("http://loan.kmutnb.ac.th/"))),
-      MenuItem(icon: Icons.medical_services, label: "ระบบเบิกจ่าย\nสวัสดิการรักษา", onTap: () => launchUrl(Uri.parse("https://medical.kmutnb.ac.th/index.php?r=site%2Flogin"))),
-      MenuItem(icon: Icons.school, label: "ระบบสวัสดิการ\nเกี่ยวกับการศึกษา", onTap: () => launchUrl(Uri.parse("https://edufee.kmutnb.ac.th/"))),
-      MenuItem(icon: Icons.gavel, label: "สหกรณ์\nออมทรัพย์", onTap: () => launchUrl(Uri.parse("https://www.ppn-scc.com/"))),
-      MenuItem(icon: Icons.event, label: "ระบบลา\nออนไลน์", onTap: () => launchUrl(Uri.parse("https://pls.kmutnb.ac.th/site/login"))),
+      MenuItem(
+        icon: Icons.group,
+        label: "ระบบเพื่ออำนวย\nทะเบียนนักศึกษา",
+        onTap:
+            () => launchUrl(
+              Uri.parse("http://klogic.kmutnb.ac.th:8080/kris/index.jsp"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.description,
+        label: "ระบบส่ง\nทกรด",
+        onTap:
+            () => launchUrl(
+              Uri.parse("https://reg1.kmutnb.ac.th/registrar/home"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.bar_chart,
+        label: "ระบบเพื่อรายงาน\nข้อมูลและสถิติ",
+        onTap: () => launchUrl(Uri.parse("https://ureport.kmutnb.ac.th/")),
+      ),
+      MenuItem(
+        icon: Icons.window,
+        label: "Microsoft Azure Dev Tool\nfor Teaching",
+        onTap:
+            () => launchUrl(
+              Uri.parse("https://azureforeducation.microsoft.com/devtools"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.cast_for_education,
+        label: "KMUTNB\nOnline Learning",
+        onTap:
+            () => launchUrl(
+              Uri.parse("https://www.kmutnb.ac.th/kmutnb-online-learning.aspx"),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.compare_arrows,
+        label: "บริการซอฟต์แวร์\nลิขสิทธิ์",
+        onTap: () => launchUrl(Uri.parse("https://software.kmutnb.ac.th/")),
+      ),
+      MenuItem(
+        icon: Icons.account_balance,
+        label: "ระบบบริหาร\nลูกหนี้เงินยืม",
+        onTap: () => launchUrl(Uri.parse("http://loan.kmutnb.ac.th/")),
+      ),
+      MenuItem(
+        icon: Icons.medical_services,
+        label: "ระบบเบิกจ่าย\nสวัสดิการรักษา",
+        onTap:
+            () => launchUrl(
+              Uri.parse(
+                "https://medical.kmutnb.ac.th/index.php?r=site%2Flogin",
+              ),
+            ),
+      ),
+      MenuItem(
+        icon: Icons.school,
+        label: "ระบบสวัสดิการ\nเกี่ยวกับการศึกษา",
+        onTap: () => launchUrl(Uri.parse("https://edufee.kmutnb.ac.th/")),
+      ),
+      MenuItem(
+        icon: Icons.gavel,
+        label: "สหกรณ์\nออมทรัพย์",
+        onTap: () => launchUrl(Uri.parse("https://www.ppn-scc.com/")),
+      ),
+      MenuItem(
+        icon: Icons.event,
+        label: "ระบบลา\nออนไลน์",
+        onTap:
+            () => launchUrl(Uri.parse("https://pls.kmutnb.ac.th/site/login")),
+      ),
     ];
 
     return Scaffold(
